@@ -3,6 +3,6 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="String" type="java.lang.String" />
-        <typeAlias alias="User" type="com.example.demo.entity.User" />
+        <typeAlias alias="User" type="com.example.demo.entity.UserEntity" />
     </typeAliases>
 </configuration>
