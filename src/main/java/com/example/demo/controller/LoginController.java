@@ -29,7 +29,7 @@ public class LoginController {
         } catch (Exception e) {
             return new ResponseEntity<>("username or password invalid", HttpStatus.BAD_REQUEST);
         }
-//        String jwt = jwtUtil.generate(loginDto.getUsername());
-        return new ResponseEntity<>(loginDto.getUsername() + " login successfully", HttpStatus.OK);
+        String jwt = jwtUtil.generate(loginDto.getUsername());
+        return new ResponseEntity<>(jwt, HttpStatus.OK);
     }
 }

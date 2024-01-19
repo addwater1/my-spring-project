@@ -7,4 +7,10 @@
     <insert id="saveUser" parameterType="UserEntity">
         insert into user_table(username,password,role) values(#{username},#{password},#{role})
     </insert>
+    <select id="findAllUsers" resultType="UserEntity">
+        select * from user_table
+    </select>
+    <delete id="deleteUserByUserName" parameterType="String">
+        delete from user_table where username = #{username}
+    </delete>
 </mapper>

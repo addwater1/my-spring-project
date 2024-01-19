@@ -10,5 +10,6 @@ public interface UserMapper {
     public UserEntity findUserByUserName(String username);
     public List<UserEntity> findAllUsers();
     public void saveUser(UserEntity user);
-    public void deleteUser(String username);
+    public void deleteUserByUserName(String username);
+    public void updateUser();
 }
