@@ -22,6 +22,7 @@ public class MyUserDetailService implements UserDetailsService {
         }
         return User.withUsername(user.getUsername())
                 .password(user.getPassword())
+                .roles(user.getRole())
                 .build();
     }
 }

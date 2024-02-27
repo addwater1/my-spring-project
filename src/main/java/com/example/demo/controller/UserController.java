@@ -5,6 +5,8 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +15,15 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-    @GetMapping("/user/find/{username}")
+    @GetMapping("/user/id/{username}")
+    @PostAuthorize("returnObject.body.username == authentication.name")
     public ResponseEntity<UserEntity> findUserByUserName(@PathVariable String username) {
         UserEntity user = userService.findUserByUserName(username);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        ResponseEntity<UserEntity> res = new ResponseEntity<>(user, HttpStatus.OK);
+        return res;
     }
-    @PostMapping("/user/all")
+    @GetMapping("/user/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserEntity>> findAllUsers() {
         List<UserEntity> users = userService.findAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
