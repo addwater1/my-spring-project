@@ -11,4 +11,6 @@ public class RegisterDto {
     private String username;
     private String password;
     private String role;
+    private String captcha;
+    private String captchaId;
 }
