@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.LoginRes;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.service.UserService;
 import com.example.demo.util.JwtUtil;
@@ -34,18 +35,21 @@ public class LoginController {
     @Autowired
     private UserService userService;
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity login(@RequestBody LoginDto loginDto) {
+        String username = loginDto.getUsername();
+        String password = loginDto.getPassword();
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword())
+                    new UsernamePasswordAuthenticationToken(username, password)
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
             return new ResponseEntity<>("username or password invalid", HttpStatus.BAD_REQUEST);
         }
-        UserEntity user = userService.findUserByUserName(loginDto.getUsername());
+        UserEntity user = userService.findUserByUserName(username);
         long expireInMs = 1000 * 60 * 60;
         String jwt = jwtUtil.generate(user.getUsername(), expireInMs);
-        return new ResponseEntity<>(jwt, HttpStatus.OK);
+        LoginRes res = new LoginRes(user.getUsername(), jwt);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }
