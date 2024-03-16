@@ -33,6 +33,7 @@ public class CaptchaController {
         String uuid = UUID.randomUUID().toString();
         captchaUtil.setCaptcha(uuid, text);
 
+        response.setHeader("Access-Control-Expose-Headers", "Captcha-UUID");
         response.setHeader("Captcha-UUID", uuid);
         response.setContentType("image/jpeg");
         OutputStream outputStream = response.getOutputStream();

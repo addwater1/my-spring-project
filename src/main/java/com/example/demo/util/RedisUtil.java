@@ -1,6 +1,7 @@
 package com.example.demo.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
     @Autowired
+    @Qualifier("redisTemplateSecond")
     private RedisTemplate redisTemplate;
 
     public void set(String key, String value, long time, TimeUnit timeUnit) {

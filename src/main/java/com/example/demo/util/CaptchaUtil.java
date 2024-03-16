@@ -12,7 +12,7 @@ public class CaptchaUtil {
     private static final long expireTime = 60 * 5;
     public boolean checkCaptcha(String captcha, String captchaId) {
         String originCaptcha = redisUtil.get(captchaId).toString();
-        if(originCaptcha == captcha) {
+        if(originCaptcha.equals(captcha)) {
             return true;
         }
         return false;
