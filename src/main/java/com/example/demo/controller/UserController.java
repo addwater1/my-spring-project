@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.UserEntity;
 import com.example.demo.service.UserService;
+import com.example.demo.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisUtil redisUtil;
     @GetMapping("/user/id/{username}")
     @PostAuthorize("returnObject.body.username == authentication.name")
     public ResponseEntity<UserEntity> findUserByUserName(@PathVariable String username) {
@@ -36,5 +40,11 @@ public class UserController {
     @PostMapping("/user/update")
     public ResponseEntity<String> updateUser() {
         return null;
+    }
+
+    @GetMapping("/user/online")
+    public ResponseEntity<?> findOnlineUsers() {
+        List<String> userList = redisUtil.getAllUsers();
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 }
