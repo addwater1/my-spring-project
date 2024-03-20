@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -37,11 +34,14 @@ public class RedisUtil {
         return redisTemplateSecond.delete(key);
     }
 
-    public List<String> getAllUsers() {
+    public List<?> getAllUsers() {
         Set<String> keys = redisTemplateSecond.keys("*");
-        List<String> userList = new ArrayList<>();
+        List<Map<String, Object>> userList = new ArrayList<>();
         for (String key : keys) {
-            userList.add(redisTemplateSecond.opsForValue().get(key).toString());
+            Map<String, Object> user = new HashMap<>();
+            user.put("key", key);
+            user.put("value", redisTemplateSecond.opsForValue().get(key));
+            userList.add(user);
         }
         return userList;
     }

@@ -25,8 +25,7 @@ public class MessageController {
     }
     @MessageMapping("/specific")
     public void sendToUser(@Payload ChatMessage chatMessage) {
-        String username = chatMessage.getUsername();
-        String message = chatMessage.getMessage();
-        simpMessagingTemplate.convertAndSendToUser(username,"/queue", message);
+        String to = chatMessage.getTo();
+        simpMessagingTemplate.convertAndSendToUser(to,"/queue", chatMessage);
     }
 }

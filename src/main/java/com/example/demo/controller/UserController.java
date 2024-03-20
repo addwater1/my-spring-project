@@ -44,7 +44,7 @@ public class UserController {
 
     @GetMapping("/user/online")
     public ResponseEntity<?> findOnlineUsers() {
-        List<String> userList = redisUtil.getAllUsers();
+        List<?> userList = redisUtil.getAllUsers();
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 }

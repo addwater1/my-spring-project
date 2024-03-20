@@ -28,7 +28,7 @@ public class StompEventListener {
 
     @EventListener
     public void handleSessionConnected(SessionConnectedEvent event) {
-        List<String> userList = redisUtil.getAllUsers();
+        List<?> userList = redisUtil.getAllUsers();
         simpMessagingTemplate.convertAndSend("/topic/connect", userList);
         System.out.println(userList);
     }
@@ -37,7 +37,7 @@ public class StompEventListener {
     public void handleSessionDisconnect(SessionDisconnectEvent event) {
         String sessionId = event.getSessionId();
         redisUtil.deleteUser(sessionId);
-        List<String> userList = redisUtil.getAllUsers();
+        List<?> userList = redisUtil.getAllUsers();
         System.out.println(userList);
         simpMessagingTemplate.convertAndSend("/topic/connect", userList);
     }
