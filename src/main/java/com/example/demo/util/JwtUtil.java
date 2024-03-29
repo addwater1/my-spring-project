@@ -12,8 +12,12 @@ import java.util.Date;
 @Service
 public class JwtUtil {
     private final static String key = "JWT_SIGN_KEY";
-    public String generate(String username, long expireInMs) {
+    private final static long expireInMs = 1000 * 60 * 60;
+    public String generate(UserEntity user) {
+        String username = user.getUsername();
+        String role = user.getRole();
         Claims claims = Jwts.claims().setSubject(username);
+        claims.put("role", role);
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + expireInMs))

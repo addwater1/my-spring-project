@@ -35,7 +35,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         String username = loginDto.getUsername();
         String password = loginDto.getPassword();
         try {
@@ -47,9 +47,11 @@ public class LoginController {
             return new ResponseEntity<>("username or password invalid", HttpStatus.BAD_REQUEST);
         }
         UserEntity user = userService.findUserByUserName(username);
-        long expireInMs = 1000 * 60 * 60;
-        String jwt = jwtUtil.generate(user.getUsername(), expireInMs);
-        LoginRes res = new LoginRes(user.getUsername(), jwt);
+        String jwt = jwtUtil.generate(user);
+        LoginRes res = new LoginRes();
+        res.setRole(user.getRole());
+        res.setUsername(user.getUsername());
+        res.setToken(jwt);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

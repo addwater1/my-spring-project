@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRes {
+public class UpdateReq {
     private String username;
-    private String token;
     private String role;
 }

@@ -13,4 +13,9 @@
     <delete id="deleteUserByUserName" parameterType="String">
         delete from user_table where username = #{username}
     </delete>
+    <update id="updateUser" parameterType="String">
+        update user_table
+        set role = #{role}
+        where username = #{username}
+    </update>
 </mapper>

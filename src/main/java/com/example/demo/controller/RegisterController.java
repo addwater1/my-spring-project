@@ -39,7 +39,7 @@ public class RegisterController {
             UserEntity user = new UserEntity();
             user.setUsername(registerDto.getUsername());
             user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-            user.setRole("user");
+            user.setRole("USER");
             userService.saveUser(user);
         } catch (Exception e) {
             return new ResponseEntity<>("sign up failed", HttpStatus.BAD_REQUEST);

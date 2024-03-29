@@ -47,7 +47,7 @@ public class WebSecurityConfig{
         http.csrf(csrf -> csrf.disable());
         http.sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/login", "/register", "/captcha/**", "/websocket").permitAll()
                         .anyRequest().authenticated()
                 );
         http.exceptionHandling(exception -> exception

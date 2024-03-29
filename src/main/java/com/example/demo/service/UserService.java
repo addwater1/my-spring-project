@@ -23,4 +23,7 @@ public class UserService {
     public void deleteUserByUserName(String username) {
         userMapper.deleteUserByUserName(username);
     }
+    public void updateUser(String username, String role) {
+        userMapper.updateUser(username, role);
+    }
 }
